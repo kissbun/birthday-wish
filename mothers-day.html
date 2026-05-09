@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <!-- 微信分享优化 -->
+    <meta name="description" content="致最亲爱的妈妈 - 一封特别的信，送给最美的您 💐">
+    <meta property="og:title" content="🌸 母亲节快乐 - 致最亲爱的妈妈">
+    <meta property="og:description" content="点击打开这封特别的信，看看我想对你说的话...">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://via.placeholder.com/300x300/ffb6c1/ff1493?text=🌸+母亲节快乐">
+    <meta name="theme-color" content="#fff0f5">
+    
+    <title>🌸 母亲节快乐 - 致最亲爱的妈妈</title>
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        html, body {
+            width: 100%; height: 100%;
+            overflow-x: hidden;
+            font-family: 'PingFang SC', 'Microsoft YaHei', -apple-system, sans-serif;
+        }
+        
+        /* ========== 温馨背景 ========== */
+        body {
+            background: linear-gradient(135deg, #fff0f5 0%, #ffe4e9 30%, #ffd1dc 60%, #ffb6c1 100%);
+            position: relative;
+            min-height: 100vh;
+        }
+        
+        .bg-petals {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        
+        .petal {
+            position: absolute;
+            width: 15px; height: 20px;
+            background: rgba(255, 182, 193, 0.6);
+            border-radius: 50% 0 50% 50%;
+            animation: petalFall linear infinite;
+            opacity: 0.7;
+        }
+        
+        @keyframes petalFall {
+            0% {
+                transform: translateY(-10%) rotate(0deg) scale(1);
+                opacity: 0.7;
+            }
+            50% {
+                transform: translateY(50vh) rotate(180deg) scale(1.1);
+                opacity: 0.9;
+            }
+            100% {
+                transform: translateY(110vh) rotate(360deg) scale(0.6);
+                opacity: 0;
+            }
+        }
+        
+        .floating-heart {
+            position: fixed;
+            font-size: 2em;
+            pointer-events: none;
+            animation: floatUp 6s ease-in-out infinite;
+            opacity: 0.5;
+            z-index: 1;
+        }
+        
+        @keyframes floatUp {
+            0%, 100% {
+                transform: translateY(0) scale(1);
+                opacity: 0.5;
+            }
+            50% {
+                transform: translateY(-30px) scale(1.1);
+                opacity: 0.7;
+            }
+        }
+        
+        /* ========== 开场祝福 ========== */
+        #welcome-screen {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            background: linear-gradient(135deg, #fff0f5 0%, #ffe4e9 100%);
+            transition: all 1s ease;
+        }
+        
+        #welcome-screen.hide {
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(1.1);
+        }
+        
+        .welcome-content {
+            text-align: center;
+            animation: fadeInScale 1.5s ease;
+        }
+        
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.5) translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        
+        .welcome-emoji {
+            font-size: 5em;
+            margin-bottom: 20px;
+            animation: bounce 2s ease infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            25% { transform: translateY(-20px); }
+            75% { transform: translateY(-10px); }
+        }
+        
+        .welcome-title {
+            font-size: 3em;
+            color: #ff69b4;
+            text-shadow: 2px 2px 4px rgba(255,105,180,0.2);
+            margin-bottom: 15px;
+            letter-spacing: 8px;
+            font-weight: bold;
+        }
+        
+        .welcome-subtitle {
+            font-size: 1.3em;
+            color: #db7093;
+            margin-bottom: 40px;
+            letter-spacing: 3px;
+        }
+        
+        .tap-hint {
+            font-size: 1em;
+            color: #ff69b4;
+            animation: pulse 2s ease infinite;
+            margin-top: 30px;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+        
+        /* ========== 信封部分 ========== */
+        #envelope-container {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        #envelope-container.show {
+            display: flex;
+        }
+        
+        .envelope-wrapper {
+            perspective: 1500px;
+            cursor: pointer;
+            width: 350px;
+            max-width: 90vw;
+        }
+        
+        .envelope {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, #fff 0%, #f8f8f8 100%);
+            border-radius: 8px;
+            box-shadow: 
+                0 10px 30px rgba(255,105,180,0.3),
+                0 5px 15px rgba(0,0,0,0.1),
+                inset 0 0 0 3px #ffe4e9;
+            transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        
+        .envelope:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                0 15px 40px rgba(255,105,180,0.4),
+                0 8px 20px rgba(0,0,0,0.15),
+                inset 0 0 0 3px #ffc0cb;
+        }
+        
+        .envelope.opened {
+            transform: scale(1.05);
+            box-shadow:
+                0 20px 50px rgba(255,105,180,0.4),
+                0 10px 25px rgba(0,0,0,0.2);
+        }
+        
+        /* 信封盖 */
+        .envelope-flap {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 130px;
+            background: linear-gradient(135deg, #ffb6c1 0%, #ff69b4 100%);
+            clip-path: polygon(0 0, 50% 65%, 100% 0);
+            transform-origin: top center;
+            transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 3;
+            border-radius: 8px 8px 0 0;
+        }
+        
+        .envelope.opened .envelope-flap {
+            transform: rotateX(-180deg);
+        }
+        
+        /* 信封装饰 */
+        .envelope-seal {
+            position: absolute;
+            top: 45%; left: 50%;
+            transform: translateX(-50%);
+            width: 60px; height: 60px;
+            background: radial-gradient(circle, #ff69b4 0%, #ff1493 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8em;
+            color: white;
+            box-shadow: 0 3px 10px rgba(255,20,147,0.4);
+            z-index: 4;
+            transition: all 0.6s ease;
+        }
+        
+        .envelope.opened .envelope-seal {
+            opacity: 0;
+            transform: translateX(-50%) scale(0);
+        }
+        
+        .envelope-body {
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 100%; height: 140px;
+            background: linear-gradient(135deg, #fff 0%, #fef5f7 100%);
+            border-radius: 0 0 8px 8px;
+            clip-path: polygon(0 35%, 50% 0, 100% 35%, 100% 100%, 0 100%);
+            z-index: 2;
+        }
+        
+        .envelope-hint {
+            text-align: center;
+            margin-top: 30px;
+            color: #ff69b4;
+            font-size: 1.1em;
+            animation: pulse 2s ease infinite;
+        }
+        
+        /* ========== 信纸内容 ========== */
+        #letter-container {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 200;
+            background: linear-gradient(180deg, rgba(255,240,245,0.98) 0%, rgba(255,228,233,0.98) 100%);
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        
+        #letter-container.show {
+            display: block;
+        }
+        
+        .letter-paper {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 80px 40px 120px;
+            background: 
+                repeating-linear-gradient(
+                    transparent,
+                    transparent 31px,
+                    #ffb6c1 31px,
+                    #ffb6c1 32px
+                );
+            background-color: rgba(255,255,255,0.85);
+            min-height: 100vh;
+            position: relative;
+            box-shadow: 0 0 50px rgba(255,105,180,0.2);
+            transform: translateY(100vh);
+            transition: transform 2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        #letter-container.show .letter-paper {
+            transform: translateY(0);
+        }
+        
+        .letter-header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .letter-title {
+            font-size: 2.2em;
+            color: #ff69b4;
+            font-weight: bold;
+            letter-spacing: 5px;
+            margin-bottom: 10px;
+        }
+        
+        .letter-date {
+            font-size: 1em;
+            color: #db7093;
+            font-style: italic;
+        }
+        
+        .letter-content {
+            font-size: 1.15em;
+            line-height: 2.2;
+            color: #444;
+            text-indent: 2em;
+            margin-bottom: 25px;
+            position: relative;
+        }
+        
+        .letter-signature {
+            text-align: right;
+            margin-top: 50px;
+            font-size: 1.2em;
+            color: #ff69b4;
+            font-style: italic;
+        }
+        
+        .letter-decoration {
+            text-align: center;
+            font-size: 2em;
+            margin: 30px 0;
+        }
+        
+        /* 关闭按钮 */
+        .close-letter-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px; height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            color: white;
+            border: none;
+            font-size: 1.5em;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(255,20,147,0.4);
+            z-index: 201;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            opacity: 0;
+        }
+        
+        #letter-container.show .close-letter-btn {
+            display: flex;
+            animation: fadeInBtn 1s ease 2s forwards;
+        }
+        
+        @keyframes fadeInBtn {
+            to { opacity: 1; }
+        }
+        
+        .close-letter-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(255,20,147,0.5);
+        }
+        
+        /* ========== 照片展示 ========== */
+        #photos-section {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 300;
+            background: linear-gradient(135deg, #fff0f5 0%, #ffe4e9 100%);
+            overflow: hidden;
+        }
+        
+        #photos-section.show {
+            display: block;
+        }
+        
+        .photos-header {
+            text-align: center;
+            padding: 60px 20px 30px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .photos-title {
+            font-size: 2.5em;
+            color: #ff69b4;
+            margin-bottom: 10px;
+            letter-spacing: 5px;
+        }
+        
+        .photos-subtitle {
+            font-size: 1.1em;
+            color: #db7093;
+        }
+        
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            padding: 20px 30px 100px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .photo-item {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(255,105,180,0.3);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: linear-gradient(135deg, #ffe4e9, #ffb6c1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .photo-item:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(255,105,180,0.4);
+        }
+        
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s;
+        }
+        
+        .photo-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .photo-placeholder {
+            text-align: center;
+            color: #ff69b4;
+            font-size: 1.1em;
+            padding: 20px;
+        }
+        
+        .photo-placeholder-icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+        
+        .upload-photo-btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 25px;
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+        
+        .upload-photo-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255,20,147,0.4);
+        }
+        
+        /* 照片查看器 */
+        .photo-viewer {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 400;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        
+        .photo-viewer.show {
+            display: flex;
+        }
+        
+        .photo-viewer img {
+            max-width: 90vw;
+            max-height: 85vh;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.5);
+        }
+        
+        .photo-viewer-close {
+            position: absolute;
+            top: 30px; right: 30px;
+            width: 45px; height: 45px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            font-size: 1.5em;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+        
+        .photo-viewer-close:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.1);
+        }
+        
+        /* 返回按钮 */
+        .back-to-home {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 14px 35px;
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1em;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(255,20,147,0.4);
+            z-index: 301;
+            display: none;
+            transition: all 0.3s;
+            letter-spacing: 3px;
+        }
+        
+        #photos-section.show .back-to-home {
+            display: block;
+            animation: fadeInBtn 1s ease 0.5s forwards;
+        }
+        
+        .back-to-home:hover {
+            transform: translateX(-50%) scale(1.05);
+            box-shadow: 0 8px 25px rgba(255,20,147,0.5);
+        }
+        
+        /* 音乐按钮 */
+        .music-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 45px; height: 45px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.9);
+            color: #ff69b4;
+            border: 2px solid #ff69b4;
+            font-size: 1.3em;
+            z-index: 999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 3px 15px rgba(255,105,180,0.3);
+            animation: musicRotate 4s linear infinite;
+        }
+        
+        .music-btn.paused {
+            animation-play-state: paused;
+        }
+        
+        @keyframes musicRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        /* 响应式 */
+        @media (max-width: 600px) {
+            .welcome-title { font-size: 2em; letter-spacing: 4px; }
+            .welcome-subtitle { font-size: 1.1em; }
+            .welcome-emoji { font-size: 3.5em; }
+            
+            .envelope-wrapper { width: 300px; }
+            .envelope { height: 220px; }
+            .envelope-flap { height: 115px; }
+            .envelope-body { height: 120px; }
+            .envelope-seal { width: 50px; height: 50px; font-size: 1.5em; }
+            
+            .letter-paper { padding: 60px 25px 100px; }
+            .letter-title { font-size: 1.8em; }
+            .letter-content { font-size: 1.05em; line-height: 2; }
+            
+            .photos-title { font-size: 1.8em; }
+            .photo-gallery { padding: 15px 15px 80px; gap: 15px; }
+            
+            .music-btn { width: 40px; height: 40px; font-size: 1.1em; }
+            .close-letter-btn { width: 45px; height: 45px; bottom: 20px; right: 20px; }
+        }
+        
+        /* 隐藏的文件输入 */
+        .hidden-input {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 背景花瓣 -->
+    <div class="bg-petals" id="bg-petals"></div>
+    
+    <!-- 浮动爱心 -->
+    <div id="floating-hearts"></div>
+    
+    <!-- 音乐按钮 -->
+    <button class="music-btn" id="music-btn">🎵</button>
+
+    <!-- 开场祝福屏幕 -->
+    <div id="welcome-screen">
+        <div class="welcome-content">
+            <div class="welcome-emoji">💐</div>
+            <h1 class="welcome-title">母亲节快乐</h1>
+            <p class="welcome-subtitle">致世界上最美的妈妈</p>
+            <p class="tap-hint">✨ 点击屏幕继续 ✨</p>
+        </div>
+    </div>
+
+    <!-- 信封容器 -->
+    <div id="envelope-container">
+        <div class="envelope-wrapper" id="envelope-wrapper">
+            <div class="envelope" id="envelope">
+                <div class="envelope-flap"></div>
+                <div class="envelope-body"></div>
+                <div class="envelope-seal">❤️</div>
+            </div>
+        </div>
+        <p class="envelope-hint">💝 点击打开信封</p>
+    </div>
+
+    <!-- 信纸内容容器 -->
+    <div id="letter-container">
+        <div class="letter-paper" id="letter-paper">
+            <div class="letter-header">
+                <h2 class="letter-title">亲爱的妈妈：</h2>
+                <p class="letter-date" id="letter-date"></p>
+            </div>
+            
+            <div class="letter-decoration">🌸 ✨ 🌺</div>
+            
+            <div class="letter-content" id="letter-content">
+                在这个特别的日子里，我想对您说声谢谢。
+                
+                <br><br>
+                
+                谢谢您给予我生命，用无私的爱将我抚养长大；谢谢您在我迷茫时给我指引，在我失落时给我鼓励；谢谢您的包容与理解，谢谢您所有的付出与牺牲。
+                
+                <br><br>
+                
+                您的爱像春天的阳光，温暖而明亮；像夏天的微风，轻柔而舒适；像秋天的果实，丰硕而甜蜜；像冬天的炉火，温暖而持久。
+                
+                <br><br>
+                
+                妈妈，您是我生命中最重要的人，是我永远的避风港。无论我走多远，飞多高，您的爱永远是我最坚实的依靠。
+                
+                <br><br>
+                
+                今天是您的节日，也是我们表达爱意的日子。千言万语汇成一句话：
+                
+                <br><br>
+                
+                <strong style="color: #ff69b4; font-size: 1.2em;">妈妈，我爱您！母亲节快乐！</strong>
+            </div>
+            
+            <div class="letter-decoration">💕 🌷 💗</div>
+            
+            <div class="letter-signature">
+                爱您的孩子<br>
+                <span style="font-size: 0.9em; color: #999;">于母亲节</span>
+            </div>
+        </div>
+        
+        <button class="close-letter-btn" id="close-letter-btn" title="关闭信件">✕</button>
+    </div>
+
+    <!-- 照片展示区 -->
+    <div id="photos-section">
+        <div class="photos-header">
+            <h2 class="photos-title">📸 美好回忆</h2>
+            <p class="photos-subtitle">记录与妈妈的温馨时光</p>
+        </div>
+        
+        <div class="photo-gallery" id="photo-gallery">
+            <!-- 示例照片占位符 -->
+            <div class="photo-item" data-index="0">
+                <div class="photo-placeholder">
+                    <div class="photo-placeholder-icon">📷</div>
+                    <p>照片 1</p>
+                    <input type="file" class="hidden-input photo-upload" accept="image/*" data-index="0">
+                    <button class="upload-photo-btn" onclick="this.previousElementSibling.click()">上传照片</button>
+                </div>
+            </div>
+            
+            <div class="photo-item" data-index="1">
+                <div class="photo-placeholder">
+                    <div class="photo-placeholder-icon">📷</div>
+                    <p>照片 2</p>
+                    <input type="file" class="hidden-input photo-upload" accept="image/*" data-index="1">
+                    <button class="upload-photo-btn" onclick="this.previousElementSibling.click()">上传照片</button>
+                </div>
+            </div>
+            
+            <div class="photo-item" data-index="2">
+                <div class="photo-placeholder">
+                    <div class="photo-placeholder-icon">📷</div>
+                    <p>照片 3</p>
+                    <input type="file" class="hidden-input photo-upload" accept="image/*" data-index="2">
+                    <button class="upload-photo-btn" onclick="this.previousElementSibling.click()">上传照片</button>
+                </div>
+            </div>
+            
+            <div class="photo-item" data-index="3">
+                <div class="photo-placeholder">
+                    <div class="photo-placeholder-icon">📷</div>
+                    <p>照片 4</p>
+                    <input type="file" class="hidden-input photo-upload" accept="image/*" data-index="3">
+                    <button class="upload-photo-btn" onclick="this.previousElementSibling.click()">上传照片</button>
+                </div>
+            </div>
+            
+            <div class="photo-item" data-index="4">
+                <div class="photo-placeholder">
+                    <div class="photo-placeholder-icon">📷</div>
+                    <p>照片 5</p>
+                    <input type="file" class="hidden-input photo-upload" accept="image/*" data-index="4">
+                    <button class="upload-photo-btn" onclick="this.previousElementSibling.click()">上传照片</button>
+                </div>
+            </div>
+            
+            <div class="photo-item" data-index="5">
+                <div class="photo-placeholder">
+                    <div class="photo-placeholder-icon">📷</div>
+                    <p>照片 6</p>
+                    <input type="file" class="hidden-input photo-upload" accept="image/*" data-index="5">
+                    <button class="upload-photo-btn" onclick="this.previousElementSibling.click()">上传照片</button>
+                </div>
+            </div>
+        </div>
+        
+        <button class="back-to-home" id="back-to-home">🏠 返回首页</button>
+    </div>
+
+    <!-- 照片查看器 -->
+    <div class="photo-viewer" id="photo-viewer">
+        <button class="photo-viewer-close" id="photo-viewer-close">✕</button>
+        <img src="" alt="照片预览" id="viewer-image">
+    </div>
+
+    <script>
+    (function() {
+        'use strict';
+
+        // ========== 初始化背景效果 ==========
+        function createPetals() {
+            var container = document.getElementById('bg-petals');
+            for (var i = 0; i < 25; i++) {
+                var petal = document.createElement('div');
+                petal.className = 'petal';
+                petal.style.left = Math.random() * 100 + '%';
+                petal.style.animationDuration = (8 + Math.random() * 8) + 's';
+                petal.style.animationDelay = Math.random() * 10 + 's';
+                petal.style.transform = 'scale(' + (0.5 + Math.random() * 0.8) + ')';
+                
+                var colors = [
+                    'rgba(255,182,193,0.6)',
+                    'rgba(255,192,203,0.5)',
+                    'rgba(255,105,180,0.4)',
+                    'rgba(219,112,147,0.5)'
+                ];
+                petal.style.background = colors[Math.floor(Math.random() * colors.length)];
+                
+                container.appendChild(petal);
+            }
+        }
+
+        function createFloatingHearts() {
+            var container = document.getElementById('floating-hearts');
+            var hearts = ['❤️', '💕', '💖', '💗', '🌸', '💝'];
+            
+            for (var i = 0; i < 8; i++) {
+                var heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = Math.random() * 90 + '%';
+                heart.style.top = Math.random() * 80 + '%';
+                heart.style.animationDelay = Math.random() * 3 + 's';
+                heart.style.fontSize = (1.5 + Math.random() * 1.5) + 'em';
+                container.appendChild(heart);
+            }
+        }
+
+        // ========== 设置日期 ==========
+        function setCurrentDate() {
+            var now = new Date();
+            var year = now.getFullYear();
+            var month = now.getMonth() + 1;
+            var day = now.getDate();
+            var dateStr = year + '年' + month + '月' + day + '日';
+            document.getElementById('letter-date').textContent = dateStr;
+        }
+
+        // ========== 背景音乐 ==========
+        var audioCtx = null;
+        var musicPlaying = false;
+        var musicBtn = document.getElementById('music-btn');
+
+        function initAudio() {
+            if (audioCtx) return;
+            var AC = window.AudioContext || window.webkitAudioContext;
+            if (AC) audioCtx = new AC();
+        }
+
+        function playNote(freq, startTime, duration, vol, type) {
+            if (!audioCtx) return;
+            var osc = audioCtx.createOscillator();
+            var gain = audioCtx.createGain();
+            osc.type = type || 'sine';
+            osc.frequency.value = freq;
+            gain.gain.setValueAtTime(vol || 0.08, startTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(startTime);
+            osc.stop(startTime + duration);
+        }
+
+        function playWarmMusic() {
+            if (!audioCtx) return;
+            var now = audioCtx.currentTime;
+            var tempo = 0.4;
+            var vol = 0.08;
+
+            // 温馨旋律（改编自《世上只有妈妈好》）
+            var melody = [
+                [330, 1], [330, 1], [392, 2], [330, 1], [392, 1], [440, 2],
+                [392, 1], [294, 1], [330, 1], [294, 1], [262, 2], [262, 1.5],
+                [294, 0.5], [294, 1], [330, 1], [294, 1], [262, 2], [220, 1],
+                [262, 1], [294, 1], [330, 1], [294, 1.5], [262, 0.5], [262, 2]
+            ];
+
+            var t = now;
+            for (var i = 0; i < melody.length; i++) {
+                playNote(melody[i][0], t, melody[i][1] * tempo, vol, 'sine');
+                t += melody[i][1] * tempo;
+            }
+            return t - now;
+        }
+
+        function startMusic() {
+            initAudio();
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            musicPlaying = true;
+            musicBtn.style.display = 'flex';
+            musicBtn.classList.remove('paused');
+            var duration = playWarmMusic();
+            setInterval(function() {
+                if (musicPlaying) playWarmMusic();
+            }, (duration + 1) * 1000);
+        }
+
+        function toggleMusic() {
+            if (musicPlaying) {
+                musicPlaying = false;
+                musicBtn.classList.add('paused');
+            } else {
+                startMusic();
+            }
+        }
+
+        musicBtn.addEventListener('click', toggleMusic);
+        musicBtn.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            toggleMusic();
+        });
+
+        // ========== 页面流程控制 ==========
+        var welcomeScreen = document.getElementById('welcome-screen');
+        var envelopeContainer = document.getElementById('envelope-container');
+        var envelopeWrapper = document.getElementById('envelope-wrapper');
+        var envelope = document.getElementById('envelope');
+        var letterContainer = document.getElementById('letter-container');
+        var closeLetterBtn = document.getElementById('close-letter-btn');
+        var photosSection = document.getElementById('photos-section');
+        var backToHome = document.getElementById('back-to-home');
+
+        var currentStage = 'welcome'; // welcome, envelope, letter, photos
+
+        // 点击欢迎页 → 显示信封
+        function showEnvelope() {
+            welcomeScreen.classList.add('hide');
+            startMusic();
+            
+            setTimeout(function() {
+                welcomeScreen.style.display = 'none';
+                envelopeContainer.classList.add('show');
+                currentStage = 'envelope';
+            }, 800);
+        }
+
+        // 点击信封 → 打开并显示信纸
+        function openEnvelope() {
+            if (currentStage !== 'envelope') return;
+            
+            envelope.classList.add('opened');
+            currentStage = 'opening';
+            
+            setTimeout(function() {
+                envelopeContainer.style.display = 'none';
+                letterContainer.classList.add('show');
+                currentStage = 'letter';
+            }, 1200);
+        }
+
+        // 关闭信件 → 显示照片
+        function showPhotos() {
+            letterContainer.classList.remove('show');
+            
+            setTimeout(function() {
+                letterContainer.style.display = 'none';
+                photosSection.classList.add('show');
+                currentStage = 'photos';
+            }, 500);
+        }
+
+        // 返回首页
+        function goHome() {
+            photosSection.classList.remove('show');
+            
+            setTimeout(function() {
+                photosSection.style.display = 'none';
+                envelope.classList.remove('opened');
+                envelopeContainer.classList.add('show');
+                currentStage = 'envelope';
+            }, 500);
+        }
+
+        // ========== 照片上传和展示 ==========
+        var photoGallery = document.getElementById('photo-gallery');
+        var photoViewer = document.getElementById('photo-viewer');
+        var viewerImage = document.getElementById('viewer-image');
+        var photoViewerClose = document.getElementById('photo-viewer-close');
+
+        // 处理照片上传
+        document.querySelectorAll('.photo-upload').forEach(function(input) {
+            input.addEventListener('change', function(e) {
+                var file = e.target.files[0];
+                if (!file) return;
+                
+                var reader = new FileReader();
+                reader.onload = function(event) {
+                    var index = input.dataset.index;
+                    var photoItem = photoGallery.querySelector('[data-index="' + index + '"]');
+                    
+                    // 清空现有内容
+                    photoItem.innerHTML = '';
+                    
+                    // 创建图片元素
+                    var img = document.createElement('img');
+                    img.src = event.target.result;
+                    img.alt = '照片 ' + (parseInt(index) + 1);
+                    
+                    // 点击查看大图
+                    img.addEventListener('click', function() {
+                        viewPhoto(event.target.src);
+                    });
+                    
+                    photoItem.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            });
+        });
+
+        // 查看大图
+        function viewPhoto(src) {
+            viewerImage.src = src;
+            photoViewer.classList.add('show');
+        }
+
+        // 关闭查看器
+        function closePhotoViewer() {
+            photoViewer.classList.remove('show');
+            setTimeout(function() {
+                viewerImage.src = '';
+            }, 300);
+        }
+
+        // ========== 事件监听 ==========
+        
+        // 欢迎页点击
+        welcomeScreen.addEventListener('click', showEnvelope);
+        welcomeScreen.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            showEnvelope();
+        });
+
+        // 信封点击
+        envelopeWrapper.addEventListener('click', openEnvelope);
+        envelopeWrapper.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            openEnvelope();
+        });
+
+        // 关闭信件按钮
+        closeLetterBtn.addEventListener('click', showPhotos);
+        closeLetterBtn.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            showPhotos();
+        });
+
+        // 返回首页按钮
+        backToHome.addEventListener('click', goHome);
+        backToHome.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            goHome();
+        });
+
+        // 照片查看器关闭
+        photoViewerClose.addEventListener('click', closePhotoViewer);
+        photoViewerClose.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            closePhotoViewer();
+        });
+
+        // 点击照片查看器背景关闭
+        photoViewer.addEventListener('click', function(e) {
+            if (e.target === photoViewer) {
+                closePhotoViewer();
+            }
+        });
+
+        // 微信兼容：防止滚动
+        document.addEventListener('touchmove', function(e) {
+            if (currentStage === 'welcome' || currentStage === 'envelope') {
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+        // 初始化音频（微信需要在用户交互后）
+        document.addEventListener('touchstart', function() {
+            if (!musicPlaying && currentStage === 'welcome') {
+                initAudio();
+            }
+        }, { once: true });
+
+        // ========== 初始化 ==========
+        createPetals();
+        createFloatingHearts();
+        setCurrentDate();
+
+    })();
+    </script>
+</body>
+</html>
